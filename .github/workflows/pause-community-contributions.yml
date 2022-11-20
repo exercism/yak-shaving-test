@@ -29,7 +29,7 @@ jobs:
         id: the-test
         with:
           script: |
-            console.log(steps.the-event.outputs.result);
+            console.log(context.steps.the-event.outputs.result);
       - name: Detect if user is org member
         uses: actions/github-script@d556feaca394842dc55e4734bf3bb9f685482fa0
         id: is-organization-member
