@@ -34,6 +34,7 @@ jobs:
         uses: actions/github-script@d556feaca394842dc55e4734bf3bb9f685482fa0
         with:
           script: |
+            console.log(context.event_name);
             var thing = (context.event_name == 'issues' ? 'issue' : 'PR');
             var aThing = (context.event_name == 'issues' ? 'an issue' : 'a PR');
             github.rest.issues.createComment({
