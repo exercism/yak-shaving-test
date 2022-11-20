@@ -15,21 +15,6 @@ jobs:
     name: Pause Community Contributions
     runs-on: ubuntu-latest
     steps:
-      - name: The Event
-        uses: actions/github-script@d556feaca394842dc55e4734bf3bb9f685482fa0
-        id: the-event
-        with:
-          script: |
-            if (github.event_name == 'issues') {
-              return 'issue';
-            }
-            return 'PR';
-      - name: The Test
-        uses: actions/github-script@d556feaca394842dc55e4734bf3bb9f685482fa0
-        id: the-test
-        with:
-          script: |
-            console.log(github);
       - name: Detect if user is org member
         uses: actions/github-script@d556feaca394842dc55e4734bf3bb9f685482fa0
         id: is-organization-member
@@ -49,11 +34,12 @@ jobs:
         uses: actions/github-script@d556feaca394842dc55e4734bf3bb9f685482fa0
         with:
           script: |
+            var thing = (context.event_name == 'issues' ? 'issue' : 'PR');
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: "Hello. Thanks for opening an issue/PR on Exercism. We are currently in a phase of our journey where we have paused community contributions to allow us to take a breather and redesign our community model. You can learn more in [this blog post](https://exercism.org/blog/freeing-our-maintainers).\n\n**As such, all issues and PRs in this repository are being automatically closed.**\n\nThat doesn’t mean we’re not interested in your ideas. If you’re stuck on something we still want to help, the best place to discuss things is with our community on [the forum](https://forum.exercism.org/c/support/8), so please feel free to copy this into a new topic there.\n\n---\n\n_Note: If you’ve had this issue/PR pre-approved on the forum, please link back to this issue/PR on the forum and a maintainer or @jonathandmiddleton will reopen it._\n"
+              body: `Hello. Thanks for opening an ${thing} on Exercism. We are currently in a phase of our journey where we have paused community contributions to allow us to take a breather and redesign our community model. You can learn more in [this blog post](https://exercism.org/blog/freeing-our-maintainers).\n\n**As such, all issues and PRs in this repository are being automatically closed.**\n\nThat doesn’t mean we’re not interested in your ideas. If you’re stuck on something we still want to help, the best place to discuss things is with our community on [the forum](https://forum.exercism.org/c/support/8), so please feel free to copy this into a new topic there.\n\n---\n\n_Note: If you’ve had this ${thing} pre-approved on the forum, please link back to this ${thing} on the forum and a maintainer or @jonathandmiddleton will reopen it._\n`
             })
       - name: Close
         if: steps.is-organization-member.outputs.result == 'false'
