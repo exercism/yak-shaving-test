@@ -40,7 +40,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `Hello. Thanks for opening ${aThing} on Exercism. We are currently in a phase of our journey where we have paused community contributions to allow us to take a breather and redesign our community model. You can learn more in [this blog post](https://exercism.org/blog/freeing-our-maintainers).\n\n**As such, all issues and PRs in this repository are being automatically closed.**\n\nThat doesn’t mean we’re not interested in your ideas. If you’re stuck on something we still want to help. The best place to discuss things is with our community on [the forum](https://forum.exercism.org/c/support/8), so please feel free to copy this into a new topic there.\n\n---\n\n_Note: If this ${thing} has been pre-approved, please link back to this ${thing} on the forum thread and a maintainer or @jonathandmiddleton will reopen it._\n`
+              body: `ISSUE_COMMENT_BODY`
             })
       - name: Close
         if: steps.is-organization-member.outputs.result == 'false'
